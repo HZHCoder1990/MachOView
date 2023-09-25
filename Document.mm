@@ -507,6 +507,7 @@ enum ViewType
 }
 
 //----------------------------------------------------------------------------
+// 重写父类的方法: superClass => NSDocument
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
     // create a temporary copy for patching
@@ -524,6 +525,7 @@ enum ViewType
     
     // open the original binary for viewing/editing
     dataController.fileName = [absoluteURL path];
+    // fileData是二进制文件(NSData)
     dataController.fileData = [NSMutableData dataWithContentsOfURL:absoluteURL
                                                            options:NSDataReadingMappedIfSafe
                                                              error:outError];

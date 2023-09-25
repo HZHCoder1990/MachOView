@@ -43,7 +43,9 @@
 //-----------------------------------------------------------------------------
 - (uint32_t)read_uint32:(NSRange &)range lastReadHex:(NSString **)lastReadHex
 {
+  // 读取4个字节数据
   uint32_t buffer;
+  // 修改 range
   range = NSMakeRange(NSMaxRange(range),sizeof(uint32_t));
   [fileData getBytes:&buffer range:range];
   if (lastReadHex) *lastReadHex = [NSString stringWithFormat:@"%.8X",buffer];

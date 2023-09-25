@@ -2155,6 +2155,7 @@ struct CompareSectionByName
   NSString * lastReadHex;
   
   [dataController read_uint32:range lastReadHex:&lastReadHex];
+  // 输出8位长整型的大写16进制
   [node.details appendRow:[NSString stringWithFormat:@"%.8lX", range.location]
                          :lastReadHex
                          :@"Magic Number"
@@ -2311,7 +2312,9 @@ struct CompareSectionByName
   else //64bit
   {
     MATCH_STRUCT(mach_header_64,imageOffset)
+    // command 数量
     ncmds = mach_header_64->ncmds;
+    // command 大小
     sizeofcmds = mach_header_64->sizeofcmds;
 
     @try
@@ -2330,6 +2333,7 @@ struct CompareSectionByName
   
   //=========== Load Commands =============
   {
+    // Commands的偏移量
     uint64_t fileOffset = imageOffset + ([self is64bit] == NO
                                          ? sizeof(struct mach_header) 
                                          : sizeof(struct mach_header_64));
@@ -2341,6 +2345,7 @@ struct CompareSectionByName
     
     for (uint32_t ncmd = 0; ncmd < ncmds; ++ncmd)
     {
+      // 给 load_command 赋值
       MATCH_STRUCT(load_command,fileOffset)
       
       // store the command for post-processing
